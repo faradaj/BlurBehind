@@ -8,8 +8,8 @@ It was used for "blurring everything behind a window" and is no longer supported
 
 BlurBehind provides an easy way to have that effect, with customization, for your window without API level restrictions.
 
-![](images/blur-behind-before.jpg)
-![](images/blur-behind-after.jpg)
+![](images/blur-behind-before.png)
+![](images/blur-behind-after.png)
 
 
 License
