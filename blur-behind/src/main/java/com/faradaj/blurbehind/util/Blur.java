@@ -33,6 +33,8 @@ public class Blur {
 			script.setInput(input);
 			script.forEach(output);
 			output.copyTo(bitmap);
+
+            sentBitmap.recycle();
 			return bitmap;
 		}
 
@@ -65,6 +67,7 @@ public class Blur {
 		// Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
 
 		Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
+        sentBitmap.recycle();
 
 		if (radius < 1) {
 			return (null);
