@@ -60,7 +60,7 @@ or
 <dependency>
   <groupId>com.faradaj</groupId>
   <artifactId>blur-behind</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 </dependency>
 ```
 

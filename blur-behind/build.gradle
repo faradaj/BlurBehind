@@ -37,5 +37,5 @@ dependencies {
 }
 
 apply plugin: 'android-maven'
-version = "1.0.0-SNAPSHOT"
+version = "1.0.0"
 group = "com.faradaj"
