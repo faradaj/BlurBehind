@@ -11,7 +11,7 @@ import com.faradaj.blurbehind.util.Blur;
 public class BlurBehind {
 
 	private static final String KEY_CACHE_BLURRED_BACKGROUND_IMAGE = "KEY_CACHE_BLURRED_BACKGROUND_IMAGE";
-	private static final int CONSTANT_BLUR_RADIUS = 20;
+	private static final int CONSTANT_BLUR_RADIUS = 16;
 	private static final int CONSTANT_DEFAULT_ALPHA = 100;
 
 	private static final LruCache<String, Bitmap> mImageCache = new LruCache<String, Bitmap>(1);
