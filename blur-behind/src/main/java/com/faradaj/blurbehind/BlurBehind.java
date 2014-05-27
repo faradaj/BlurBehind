@@ -30,7 +30,6 @@ public class BlurBehind {
 			BitmapDrawable bd = new BitmapDrawable(activity.getResources(), background);
 			bd.setAlpha(alpha);
 			activity.getWindow().setBackgroundDrawable(bd);
-            background.recycle();
 		}
 	}
 
@@ -63,16 +62,12 @@ public class BlurBehind {
 			Bitmap blurredBitmap = Blur.apply(mActivity, mImage, CONSTANT_BLUR_RADIUS);
 			mImageCache.put(KEY_CACHE_BLURRED_BACKGROUND_IMAGE, blurredBitmap);
 
-            blurredBitmap.recycle();
-
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(Void aVoid) {
 			super.onPostExecute(aVoid);
-
-            mImage.recycle();
 
 			mRunnable.run();
 		}
