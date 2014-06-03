@@ -38,6 +38,7 @@ public class BlurBehind {
 		private Activity mActivity;
 		private Runnable mRunnable;
 
+        private View mDecorView;
 		private Bitmap mImage;
 
 		public CacheBlurBehindAndExecuteTask(Activity activity, Runnable r) {
@@ -49,12 +50,12 @@ public class BlurBehind {
 		protected void onPreExecute() {
 			super.onPreExecute();
 
-			View v = mActivity.getWindow().getDecorView();
-			v.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
-			v.setDrawingCacheEnabled(true);
-			v.buildDrawingCache();
+			mDecorView = mActivity.getWindow().getDecorView();
+            mDecorView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
+            mDecorView.setDrawingCacheEnabled(true);
+            mDecorView.buildDrawingCache();
 
-			mImage = v.getDrawingCache();
+			mImage = mDecorView.getDrawingCache();
 		}
 
 		@Override
@@ -68,6 +69,9 @@ public class BlurBehind {
 		@Override
 		protected void onPostExecute(Void aVoid) {
 			super.onPostExecute(aVoid);
+
+            mDecorView.destroyDrawingCache();
+            mDecorView.setDrawingCacheEnabled(false);
 
 			mRunnable.run();
 		}
