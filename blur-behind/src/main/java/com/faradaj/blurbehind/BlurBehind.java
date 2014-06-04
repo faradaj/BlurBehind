@@ -16,8 +16,11 @@ public class BlurBehind {
 
 	private static final LruCache<String, Bitmap> mImageCache = new LruCache<String, Bitmap>(1);
 
+    private static CacheBlurBehindAndExecuteTask cacheBlurBehindAndExecuteTask;
+
 	public static void execute(Activity activity, Runnable runnable) {
-		new CacheBlurBehindAndExecuteTask(activity, runnable).execute();
+        cacheBlurBehindAndExecuteTask = new CacheBlurBehindAndExecuteTask(activity, runnable);
+        cacheBlurBehindAndExecuteTask.execute();
 	}
 
 	public static void setBackground(Activity activity) {
@@ -25,11 +28,11 @@ public class BlurBehind {
 	}
 
 	public static void setBackground(Activity activity, int alpha) {
-		Bitmap background = mImageCache.get(KEY_CACHE_BLURRED_BACKGROUND_IMAGE);
-		if (background != null) {
-			BitmapDrawable bd = new BitmapDrawable(activity.getResources(), background);
+		if (mImageCache.size() != 0) {
+			BitmapDrawable bd = new BitmapDrawable(activity.getResources(), mImageCache.get(KEY_CACHE_BLURRED_BACKGROUND_IMAGE));
 			bd.setAlpha(alpha);
 			activity.getWindow().setBackgroundDrawable(bd);
+            cacheBlurBehindAndExecuteTask = null;
 		}
 	}
 
