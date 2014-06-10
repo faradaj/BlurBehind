@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
 						startActivity(intent);
 					}
 				};
-				BlurBehind.execute(MainActivity.this, runnable);
+				BlurBehind.getInstance().execute(MainActivity.this, runnable);
 			}
 		});
 	}
