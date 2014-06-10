@@ -12,7 +12,7 @@ BlurBehind provides an easy way to have that effect, with customization, for you
 
 ### Usage
 
-Invoke `BlurBehind.execute()` method with caller `Activity` and the actual work as a `Runnable`.
+Invoke `BlurBehind.getInstance().execute()` method with caller `Activity` and the actual work as a `Runnable`.
 
 ```java
 dummyButton.setOnClickListener(new View.OnClickListener() {
@@ -28,16 +28,29 @@ dummyButton.setOnClickListener(new View.OnClickListener() {
 				startActivity(intent);
 			}
 		};
-		BlurBehind.execute(MainActivity.this, runnable);
+		BlurBehind.getInstance().execute(MainActivity.this, runnable);
 	}
 });
 ```
 
-And use `BlurBehind.setBackground()` method on new `View`, which is an `Activity` in sample project:
+And use `BlurBehind.getInstance().setBackground(Activity a)` method on new `View`, which is an `Activity` in sample project:
 
 ```java
-BlurBehind.setBackground(this);
+BlurBehind.getInstance().setBackground(this);
 ```
+
+You can optionally set `alpha` and `filterColor`:
+
+```java
+BlurBehind.getInstance()
+    .withAlpha(80)
+    .withFilterColor(Color.parseColor("#0075c0")) //or Color.RED
+    .setBackground(this);
+```
+Which will result in this:
+
+![](images/blur-behind-before.png)
+![](images/blur-behind-after-alpha-color.png)
 
 ### Dependency
 
