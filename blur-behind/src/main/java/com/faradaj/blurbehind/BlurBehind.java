@@ -56,34 +56,33 @@ public class BlurBehind {
         }
 	}
 
-	private static class CacheBlurBehindAndExecuteTask extends AsyncTask<Void, Void, Void> {
+	private class CacheBlurBehindAndExecuteTask extends AsyncTask<Void, Void, Void> {
+		private Activity activity;
+		private Runnable runnable;
 
-		private Activity mActivity;
-		private Runnable mRunnable;
+        private View decorView;
+		private Bitmap image;
 
-        private View mDecorView;
-		private Bitmap mImage;
-
-		public CacheBlurBehindAndExecuteTask(Activity activity, Runnable r) {
-			mActivity = activity;
-			mRunnable = r;
+		public CacheBlurBehindAndExecuteTask(Activity a, Runnable r) {
+			activity = a;
+			runnable = r;
 		}
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 
-			mDecorView = mActivity.getWindow().getDecorView();
-            mDecorView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
-            mDecorView.setDrawingCacheEnabled(true);
-            mDecorView.buildDrawingCache();
+            decorView = activity.getWindow().getDecorView();
+            decorView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
+            decorView.setDrawingCacheEnabled(true);
+            decorView.buildDrawingCache();
 
-			mImage = mDecorView.getDrawingCache();
+			image = decorView.getDrawingCache();
 		}
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			Bitmap blurredBitmap = Blur.apply(mActivity, mImage, CONSTANT_BLUR_RADIUS);
+			Bitmap blurredBitmap = Blur.apply(activity, image, CONSTANT_BLUR_RADIUS);
 			mImageCache.put(KEY_CACHE_BLURRED_BACKGROUND_IMAGE, blurredBitmap);
 
 			return null;
@@ -93,10 +92,10 @@ public class BlurBehind {
 		protected void onPostExecute(Void aVoid) {
 			super.onPostExecute(aVoid);
 
-            mDecorView.destroyDrawingCache();
-            mDecorView.setDrawingCacheEnabled(false);
+            decorView.destroyDrawingCache();
+            decorView.setDrawingCacheEnabled(false);
 
-			mRunnable.run();
+			runnable.run();
 		}
 	}
 }
