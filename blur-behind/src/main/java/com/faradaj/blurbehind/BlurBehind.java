@@ -2,6 +2,7 @@ package com.faradaj.blurbehind;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.support.v4.util.LruCache;
@@ -15,25 +16,44 @@ public class BlurBehind {
 	private static final int CONSTANT_DEFAULT_ALPHA = 100;
 
 	private static final LruCache<String, Bitmap> mImageCache = new LruCache<String, Bitmap>(1);
-
     private static CacheBlurBehindAndExecuteTask cacheBlurBehindAndExecuteTask;
 
-	public static void execute(Activity activity, Runnable runnable) {
+    private int mAlpha = CONSTANT_DEFAULT_ALPHA;
+    private int mFilterColor = -1;
+
+    private static BlurBehind mInstance;
+    public static BlurBehind getInstance () {
+        if (mInstance == null){
+            mInstance = new BlurBehind();
+        }
+        return mInstance;
+    }
+
+	public void execute(Activity activity, Runnable runnable) {
         cacheBlurBehindAndExecuteTask = new CacheBlurBehindAndExecuteTask(activity, runnable);
         cacheBlurBehindAndExecuteTask.execute();
 	}
 
-	public static void setBackground(Activity activity) {
-		setBackground(activity, CONSTANT_DEFAULT_ALPHA);
-	}
+    public BlurBehind withAlpha(int alpha) {
+        this.mAlpha = alpha;
+        return this;
+    }
 
-	public static void setBackground(Activity activity, int alpha) {
-		if (mImageCache.size() != 0) {
-			BitmapDrawable bd = new BitmapDrawable(activity.getResources(), mImageCache.get(KEY_CACHE_BLURRED_BACKGROUND_IMAGE));
-			bd.setAlpha(alpha);
-			activity.getWindow().setBackgroundDrawable(bd);
+    public BlurBehind withFilterColor(int filterColor) {
+        this.mFilterColor = filterColor;
+        return this;
+    }
+
+	public void setBackground(Activity activity) {
+        if (mImageCache.size() != 0) {
+            BitmapDrawable bd = new BitmapDrawable(activity.getResources(), mImageCache.get(KEY_CACHE_BLURRED_BACKGROUND_IMAGE));
+            bd.setAlpha(mAlpha);
+            if(mFilterColor != -1) {
+                bd.setColorFilter(mFilterColor, PorterDuff.Mode.DST_ATOP);
+            }
+            activity.getWindow().setBackgroundDrawable(bd);
             cacheBlurBehindAndExecuteTask = null;
-		}
+        }
 	}
 
 	private static class CacheBlurBehindAndExecuteTask extends AsyncTask<Void, Void, Void> {
