@@ -21,6 +21,13 @@ public class BlurBehind {
     private int mAlpha = CONSTANT_DEFAULT_ALPHA;
     private int mFilterColor = -1;
 
+    private enum State {
+        READY,
+        EXECUTING
+    }
+
+    private State mState = State.READY;
+
     private static BlurBehind mInstance;
     public static BlurBehind getInstance () {
         if (mInstance == null){
@@ -29,10 +36,13 @@ public class BlurBehind {
         return mInstance;
     }
 
-	public void execute(Activity activity, Runnable runnable) {
-        cacheBlurBehindAndExecuteTask = new CacheBlurBehindAndExecuteTask(activity, runnable);
-        cacheBlurBehindAndExecuteTask.execute();
-	}
+    public void execute(Activity activity, Runnable runnable) {
+        if (mState.equals(State.READY)) {
+            mState = State.EXECUTING;
+            cacheBlurBehindAndExecuteTask = new CacheBlurBehindAndExecuteTask(activity, runnable);
+            cacheBlurBehindAndExecuteTask.execute();
+        }
+    }
 
     public BlurBehind withAlpha(int alpha) {
         this.mAlpha = alpha;
@@ -95,7 +105,11 @@ public class BlurBehind {
             decorView.destroyDrawingCache();
             decorView.setDrawingCacheEnabled(false);
 
-			runnable.run();
-		}
-	}
+            activity = null;
+
+            runnable.run();
+
+            mState = State.READY;
+        }
+    }
 }
