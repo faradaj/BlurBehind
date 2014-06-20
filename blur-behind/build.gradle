@@ -20,8 +20,8 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 19
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.0.2"
     }
     buildTypes {
         release {
@@ -37,5 +37,5 @@ dependencies {
 }
 
 apply plugin: 'android-maven'
-version = "1.0.1"
+version = "1.0.2"
 group = "com.faradaj"
