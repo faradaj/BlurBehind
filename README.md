@@ -81,9 +81,9 @@ or you can clone and add `blur-behind` as a library project to yours.
 
 ### Credits
 
-Mario Klingmann[2], for the original StackBlur[3] algorithm.
-Yahel Bouaziz[4], for porting StackBlur to Android.
-Nicolas Pomepuy[5], for his demonstration[6].
+[Mario Klingmann][2], for the original [StackBlur][3] algorithm.
+[Yahel Bouaziz][4], for porting StackBlur to Android.
+[Nicolas Pomepuy][5], for his [demonstration][6].
 
 
 ### License
