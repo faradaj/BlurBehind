@@ -63,6 +63,7 @@ public class BlurBehind {
                 bd.setColorFilter(mFilterColor, PorterDuff.Mode.DST_ATOP);
             }
             activity.getWindow().setBackgroundDrawable(bd);
+            mImageCache.remove(KEY_CACHE_BLURRED_BACKGROUND_IMAGE);
             cacheBlurBehindAndExecuteTask = null;
         }
     }
