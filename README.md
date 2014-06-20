@@ -62,7 +62,7 @@ repositories {
     mavenLocal()
 }
 dependencies {
-    compile 'com.faradaj:blur-behind:1.0.+'
+    compile 'com.faradaj:blur-behind:[LATEST_RELEASE_VERSION]'
 }
 ```
 
@@ -73,7 +73,7 @@ or
 <dependency>
   <groupId>com.faradaj</groupId>
   <artifactId>blur-behind</artifactId>
-  <version>1.0.1</version>
+  <version>[LATEST_RELEASE_VERSION]</version>
 </dependency>
 ```
 
