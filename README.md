@@ -79,6 +79,13 @@ or
 
 or you can clone and add `blur-behind` as a library project to yours.
 
+### Credits
+
+Mario Klingmann[2], for the original StackBlur[3] algorithm.
+Yahel Bouaziz[4], for porting StackBlur to Android.
+Nicolas Pomepuy[5], for his demonstration[6].
+
+
 ### License
 
     The MIT License (MIT)
@@ -105,3 +112,8 @@ or you can clone and add `blur-behind` as a library project to yours.
     
     
   [1]: http://developer.android.com/reference/android/view/WindowManager.LayoutParams.html#FLAG_BLUR_BEHIND
+  [2]: http://www.quasimondo.com/
+  [3]: http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html
+  [4]: http://www.kayenko.com/
+  [5]: https://github.com/PomepuyN
+  [6]: https://github.com/PomepuyN/BlurEffectForAndroidDesign
