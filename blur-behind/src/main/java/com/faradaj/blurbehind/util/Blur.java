@@ -9,7 +9,7 @@ import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 
-// Source from Nicolas Pomepuy
+// Slightly modified source from Nicolas Pomepuy
 // https://github.com/PomepuyN/BlurEffectForAndroidDesign
 
 public class Blur {
@@ -21,11 +21,11 @@ public class Blur {
 	@SuppressLint("NewApi")
 	public static Bitmap apply(Context context, Bitmap sentBitmap, int radius) {
 
-		if (VERSION.SDK_INT > 16) {
-			Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
+        Bitmap bitmap = Bitmap.createScaledBitmap(sentBitmap, sentBitmap.getWidth()/2, sentBitmap.getHeight()/2, false);
 
+		if (VERSION.SDK_INT > 16) {
 			final RenderScript rs = RenderScript.create(context);
-			final Allocation input = Allocation.createFromBitmap(rs, sentBitmap, Allocation.MipmapControl.MIPMAP_NONE,
+			final Allocation input = Allocation.createFromBitmap(rs, bitmap, Allocation.MipmapControl.MIPMAP_NONE,
 					Allocation.USAGE_SCRIPT);
 			final Allocation output = Allocation.createTyped(rs, input.getType());
 			final ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
@@ -64,8 +64,6 @@ public class Blur {
 		// the following line:
 		//
 		// Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
-
-		Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
 
 		if (radius < 1) {
 			return (null);
