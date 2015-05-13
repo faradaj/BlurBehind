@@ -19,16 +19,15 @@ dummyButton.setOnClickListener(new View.OnClickListener() {
 	@Override
 	public void onClick(View v) {
 
-		Runnable runnable = new Runnable() {
-			@Override
-			public void run() {
-				Intent intent = new Intent(MainActivity.this, BlurredActivity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+		BlurBehind.getInstance().execute(MainActivity.this, new OnBlurCompleteListener() {
+            @Override
+            public void onBlurComplete() {
+                Intent intent = new Intent(MainActivity.this, BlurredActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
-				startActivity(intent);
-			}
-		};
-		BlurBehind.getInstance().execute(MainActivity.this, runnable);
+                startActivity(intent);
+            }
+        });
 	}
 });
 ```
