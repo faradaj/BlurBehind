@@ -37,10 +37,10 @@ public class BlurBehind {
         return mInstance;
     }
 
-    public void execute(Activity activity, Runnable runnable) {
+    public void execute(Activity activity, OnBlurCompleteListener onBlurCompleteListener) {
         if (mState.equals(State.READY)) {
             mState = State.EXECUTING;
-            cacheBlurBehindAndExecuteTask = new CacheBlurBehindAndExecuteTask(activity, runnable);
+            cacheBlurBehindAndExecuteTask = new CacheBlurBehindAndExecuteTask(activity, onBlurCompleteListener);
             cacheBlurBehindAndExecuteTask.execute();
         }
     }
@@ -70,14 +70,14 @@ public class BlurBehind {
 
     private class CacheBlurBehindAndExecuteTask extends AsyncTask<Void, Void, Void> {
         private Activity activity;
-        private Runnable runnable;
+        private OnBlurCompleteListener onBlurCompleteListener;
 
         private View decorView;
         private Bitmap image;
 
-        public CacheBlurBehindAndExecuteTask(Activity a, Runnable r) {
-            activity = a;
-            runnable = r;
+        public CacheBlurBehindAndExecuteTask(Activity activity, OnBlurCompleteListener onBlurCompleteListener) {
+            this.activity = activity;
+            this.onBlurCompleteListener = onBlurCompleteListener;
         }
 
         @Override
@@ -109,7 +109,7 @@ public class BlurBehind {
 
             activity = null;
 
-            runnable.run();
+            onBlurCompleteListener.onBlurComplete();
 
             mState = State.READY;
         }
