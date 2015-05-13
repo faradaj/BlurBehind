@@ -9,6 +9,9 @@ buildscript {
 }
 apply plugin: 'com.android.library'
 
+def mVersionCode = 5
+def mVersionName = "1.0.4"
+
 repositories {
     mavenCentral()
 }
@@ -20,8 +23,8 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 19
-        versionCode 4
-        versionName "1.0.3"
+        versionCode mVersionCode
+        versionName mVersionName
     }
     buildTypes {
         release {
@@ -37,5 +40,5 @@ dependencies {
 }
 
 apply plugin: 'android-maven'
-version = "1.0.3"
-group = "com.faradaj"
+version = mVersionName
+group = "com.faradaj.android"
