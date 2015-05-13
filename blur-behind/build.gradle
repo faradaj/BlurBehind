@@ -3,11 +3,11 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
-        classpath 'com.github.dcendents:android-maven-plugin:1.0'
+        classpath 'com.android.tools.build:gradle:1.1.0'
+        classpath 'com.github.dcendents:android-maven-plugin:1.2'
     }
 }
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 
 repositories {
     mavenCentral()
@@ -25,8 +25,8 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            minifyEnabled false
+            proguardFiles 'proguard-rules.txt'
         }
     }
 }
