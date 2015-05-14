@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'com.android.library'
 
 def mVersionCode = 5
-def mVersionName = "1.0.4"
+def mVersionName = "1.1"
 
 repositories {
     mavenCentral()
@@ -41,4 +41,4 @@ dependencies {
 
 apply plugin: 'android-maven'
 version = mVersionName
-group = "com.faradaj.android"
+group = "com.faradaj"
