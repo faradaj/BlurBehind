@@ -5,5 +5,8 @@ android:
     - build-tools-19.1.0
     - android-19
 
+before_script:
+	- chmod +x gradlew
+
 script:
   ./gradlew build
