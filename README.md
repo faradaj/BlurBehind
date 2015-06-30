@@ -53,13 +53,13 @@ Which will result in this:
 
 ### Dependency
 
+- Run `gradle install` on `blur-behind` library project.
+- 
 - In your `build.gradle`:
 ```groovy
 repositories {
     mavenCentral()
-    maven {
-        url "https://dl.bintray.com/faradaj/maven"
-    }
+    mavenLocal() //Add local m2 repository of yours
 }
 dependencies {
     compile 'com.faradaj:blur-behind:[LATEST_RELEASE_VERSION]'
