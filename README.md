@@ -54,7 +54,6 @@ Which will result in this:
 ### Dependency
 
 - Run `gradle install` on `blur-behind` library project.
-- 
 - In your `build.gradle`:
 ```groovy
 repositories {
