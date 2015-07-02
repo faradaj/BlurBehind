@@ -20,6 +20,7 @@ public class BlurBehind {
 
     private int mAlpha = CONSTANT_DEFAULT_ALPHA;
     private int mFilterColor = -1;
+    private int mBlurRadius = CONSTANT_BLUR_RADIUS;
 
     private enum State {
         READY,
@@ -54,6 +55,12 @@ public class BlurBehind {
         this.mFilterColor = filterColor;
         return this;
     }
+    
+    public BlurBehind withBlurRadius(int blurRadius) {
+        this.mBlurRadius = blurRadius;
+        return this;
+    }
+
 
     public void setBackground(Activity activity) {
         if (mImageCache.size() != 0) {
@@ -94,7 +101,7 @@ public class BlurBehind {
 
         @Override
         protected Void doInBackground(Void... params) {
-            Bitmap blurredBitmap = Blur.apply(activity, image, CONSTANT_BLUR_RADIUS);
+            Bitmap blurredBitmap = Blur.apply(activity, image, mBlurRadius);
             mImageCache.put(KEY_CACHE_BLURRED_BACKGROUND_IMAGE, blurredBitmap);
 
             return null;
