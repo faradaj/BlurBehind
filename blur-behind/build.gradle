@@ -9,7 +9,7 @@ buildscript {
 }
 apply plugin: 'com.android.library'
 
-def mVersionCode = 5
+def mVersionCode = 6
 def mVersionName = "1.1"
 
 repositories {
