@@ -73,7 +73,6 @@ public class BlurBehind {
     public void setBackgroundWithoutImageRemove(Activity activity) {
         if (mImageCache.size() != 0) {
             setBackgroundWithoutClearCache(activity);
-            mImageCache.put(KEY_CACHE_BLURRED_BACKGROUND_IMAGE, setBackgroundWithoutClearCache(activity).getBitmap());
         }
     }
 
@@ -87,7 +86,7 @@ public class BlurBehind {
         return mImageCache.size() != 0 ? mImageCache.get(KEY_CACHE_BLURRED_BACKGROUND_IMAGE) : null;
     }
 
-    private BitmapDrawable setBackgroundWithoutClearCache(Activity activity) {
+    private void setBackgroundWithoutClearCache(Activity activity) {
         BitmapDrawable bd = new BitmapDrawable(activity.getResources(), mImageCache.get(KEY_CACHE_BLURRED_BACKGROUND_IMAGE));
         bd.setAlpha(mAlpha);
         if (mFilterColor != -1) {
@@ -95,7 +94,6 @@ public class BlurBehind {
         }
         activity.getWindow().setBackgroundDrawable(bd);
         cacheBlurBehindAndExecuteTask = null;
-        return bd;
     }
 
     private class CacheBlurBehindAndExecuteTask extends AsyncTask<Void, Void, Void> {
@@ -126,7 +124,6 @@ public class BlurBehind {
         protected Void doInBackground(Void... params) {
             Bitmap blurredBitmap = Blur.apply(activity, image, mBlurRadius);
             mImageCache.put(KEY_CACHE_BLURRED_BACKGROUND_IMAGE, blurredBitmap);
-
             return null;
         }
 
