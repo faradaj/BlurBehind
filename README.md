@@ -1,3 +1,5 @@
+##[DEPRECATED]
+
 ## BlurBehind    [![Build Status](https://travis-ci.org/faradaj/BlurBehind.svg?branch=master)](https://travis-ci.org/faradaj/BlurBehind)
 
 Easily have blurred and transparent background effect on your Android views.
