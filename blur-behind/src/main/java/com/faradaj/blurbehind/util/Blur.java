@@ -33,7 +33,9 @@ public class Blur {
 			script.setInput(input);
 			script.forEach(output);
 			output.copyTo(bitmap);
-
+                        
+                        //After finishing everything, we destroy the Renderscript.
+                        rs.destroy();
 			return bitmap;
 		}
 
