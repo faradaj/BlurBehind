@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.support.v4.util.LruCache;
 import android.view.View;
+
 import com.faradaj.blurbehind.util.Blur;
 
 public class BlurBehind {
@@ -20,6 +21,7 @@ public class BlurBehind {
 
     private int mAlpha = CONSTANT_DEFAULT_ALPHA;
     private int mFilterColor = -1;
+    private int mBlurRadius = CONSTANT_BLUR_RADIUS;
 
     private enum State {
         READY,
@@ -55,17 +57,43 @@ public class BlurBehind {
         return this;
     }
 
+    public BlurBehind withBlurRadius(int blurRadius) {
+        this.mBlurRadius = blurRadius;
+        return this;
+    }
+
+
     public void setBackground(Activity activity) {
         if (mImageCache.size() != 0) {
-            BitmapDrawable bd = new BitmapDrawable(activity.getResources(), mImageCache.get(KEY_CACHE_BLURRED_BACKGROUND_IMAGE));
-            bd.setAlpha(mAlpha);
-            if (mFilterColor != -1) {
-                bd.setColorFilter(mFilterColor, PorterDuff.Mode.DST_ATOP);
-            }
-            activity.getWindow().setBackgroundDrawable(bd);
-            mImageCache.remove(KEY_CACHE_BLURRED_BACKGROUND_IMAGE);
-            cacheBlurBehindAndExecuteTask = null;
+            setBackgroundWithoutClearCache(activity);
+            clearImageCache();
         }
+    }
+
+    public void setBackgroundWithoutImageRemove(Activity activity) {
+        if (mImageCache.size() != 0) {
+            setBackgroundWithoutClearCache(activity);
+        }
+    }
+
+    public void clearImageCache() {
+        if (mImageCache.size() != 0) {
+            mImageCache.remove(KEY_CACHE_BLURRED_BACKGROUND_IMAGE);
+        }
+    }
+
+    public Bitmap getSavedBluredImage() {
+        return mImageCache.size() != 0 ? mImageCache.get(KEY_CACHE_BLURRED_BACKGROUND_IMAGE) : null;
+    }
+
+    private void setBackgroundWithoutClearCache(Activity activity) {
+        BitmapDrawable bd = new BitmapDrawable(activity.getResources(), mImageCache.get(KEY_CACHE_BLURRED_BACKGROUND_IMAGE));
+        bd.setAlpha(mAlpha);
+        if (mFilterColor != -1) {
+            bd.setColorFilter(mFilterColor, PorterDuff.Mode.DST_ATOP);
+        }
+        activity.getWindow().setBackgroundDrawable(bd);
+        cacheBlurBehindAndExecuteTask = null;
     }
 
     private class CacheBlurBehindAndExecuteTask extends AsyncTask<Void, Void, Void> {
@@ -94,9 +122,8 @@ public class BlurBehind {
 
         @Override
         protected Void doInBackground(Void... params) {
-            Bitmap blurredBitmap = Blur.apply(activity, image, CONSTANT_BLUR_RADIUS);
+            Bitmap blurredBitmap = Blur.apply(activity, image, mBlurRadius);
             mImageCache.put(KEY_CACHE_BLURRED_BACKGROUND_IMAGE, blurredBitmap);
-
             return null;
         }
 

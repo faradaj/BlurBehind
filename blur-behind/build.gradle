@@ -9,8 +9,8 @@ buildscript {
 }
 apply plugin: 'com.android.library'
 
-def mVersionCode = 5
-def mVersionName = "1.1"
+def mVersionCode = 6
+def mVersionName = "1.3"
 
 repositories {
     mavenCentral()
